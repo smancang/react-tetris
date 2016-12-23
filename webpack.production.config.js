@@ -1,19 +1,19 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var version = require('./package.json').version;
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const version = require('./package.json').version;
 
 // production环境配置
 module.exports = {
-  devtool: 'source-map',// 生成source-map追踪js错误
-  entry: __dirname + '/src/index.js',// 程序入口
+  devtool: 'source-map', // 生成source-map追踪js错误
+  entry: `${__dirname}/src/index.js`, // 程序入口
   output: {
-    path: __dirname + '/build',
-    filename: 'app-'+version+'.js',
+    path: `${__dirname}/build`,
+    filename: `app-${version}.js`,
   },
   eslint: {
-    configFile: __dirname + '/.eslintrc.js'
+    configFile: `${__dirname}/.eslintrc.js`,
   },
   module: {
     loaders: [
@@ -33,23 +33,24 @@ module.exports = {
       },
       {
         test: /\.less/,
-        loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[hash:base64:4]!less'),
+        loader: ExtractTextPlugin.extract('style',
+        'css?modules&localIdentName=[hash:base64:4]!less'),
       },
     ],
   },
-  plugins:[
+  plugins: [
     new CopyWebpackPlugin([
       { from: './src/resource/music/music.mp3' },
       { from: './src/resource/css/loader.css' },
     ]),
     new HtmlWebpackPlugin({
-        template: __dirname + '/server/index.tmpl.html'
+      template: `${__dirname}/server/index.tmpl.html`,
     }),
     new webpack.optimize.UglifyJsPlugin(),
-    new ExtractTextPlugin('css-' + version + '.css'),
+    new ExtractTextPlugin(`css-${version}.css`),
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
-        'process.env.NODE_ENV': '"production"',
+      'process.env.NODE_ENV': '"production"',
     }),
   ],
 };

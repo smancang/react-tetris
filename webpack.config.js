@@ -1,17 +1,17 @@
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 // dev环境配置
 module.exports = {
   devtool: 'eval-source-map', // 生成source-map追踪js错误
-  entry: __dirname + '/src/index.js', // 程序入口
+  entry: `${__dirname}/src/index.js`, // 程序入口
   output: {
-    path: __dirname + '/server',
+    path: `${__dirname}/server`,
     filename: 'app.js',
   },
   eslint: {
-    configFile: __dirname + '/.eslintrc.js',
+    configFile: `${__dirname}/.eslintrc.js`,
   },
   module: {
     loaders: [
